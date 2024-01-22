@@ -35,6 +35,15 @@ module PgFactoryBot
         ", class: '#{nombre_clase_completo}'"
       end
 
+      def namespace # :doc:
+        nil
+      end
+      def class_path # :doc:
+        []
+      end
+      def create_module_file
+      end
+
       private
 
         def factory_definition
@@ -78,7 +87,7 @@ module PgFactoryBot
             'Faker::Lorem.sentence'
           elsif attribute.type == :date
             'Faker::Date.backward'
-          elsif attribute.type == :float || attribute.type == :decimal
+          elsif attribute.type == :float || attribute.type == :decimal || attribute.type == :integer
             'Faker::Number.decimal(l_digits: 3, r_digits: 2)'
           else
             attribute.default.inspect

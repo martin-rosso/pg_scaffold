@@ -13,6 +13,15 @@ module PgRspec
       remove_hook_for :fixture_replacement
 
       invoke 'pg_factory_bot:model'
+
+      def namespace # :doc:
+        nil
+      end
+      def class_path # :doc:
+        []
+      end
+      def create_module_file
+      end
     end
   end
 end

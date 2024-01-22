@@ -70,7 +70,7 @@ RSpec.describe <%= controller_class_name %>Controller, <%= type_metatag(:control
 <% end -%>
     end
 
-    let!(:<%= ns_file_name %>) { create :<%= ns_file_name %> }
+    let!(:<%= nombre_tabla_completo_singular %>) { create :<%= nombre_tabla_completo_singular %> }
 
     it 'returns a success response' do
       subject
@@ -79,7 +79,7 @@ RSpec.describe <%= controller_class_name %>Controller, <%= type_metatag(:control
 <% if options[:discard] -%>
 
     context 'si está descartado' do
-      before { <%= ns_file_name %>.discard! }
+      before { <%= nombre_tabla_completo_singular %>.discard! }
 
       it do
         subject
@@ -92,7 +92,7 @@ RSpec.describe <%= controller_class_name %>Controller, <%= type_metatag(:control
 <% end -%>
   describe 'GET #show' do
     it 'returns a success response' do
-      <%= file_name %> = create(:<%= ns_file_name %>)
+      <%= file_name %> = create(:<%= nombre_tabla_completo_singular %>)
 <% if Rails::VERSION::STRING < '5.0' -%>
       get :show, { id: <%= file_name %>.to_param }
 <% else -%>
@@ -115,7 +115,7 @@ RSpec.describe <%= controller_class_name %>Controller, <%= type_metatag(:control
 
   describe 'GET #edit' do
     it 'returns a success response' do
-      <%= file_name %> = create(:<%= ns_file_name %>)
+      <%= file_name %> = create(:<%= nombre_tabla_completo_singular %>)
 <% if Rails::VERSION::STRING < '5.0' -%>
       get :edit, { id: <%= file_name %>.to_param }
 <% else -%>
@@ -130,18 +130,18 @@ RSpec.describe <%= controller_class_name %>Controller, <%= type_metatag(:control
       it 'creates a new <%= class_name %>' do
         expect do
 <% if Rails::VERSION::STRING < '5.0' -%>
-          post :create, { <%= ns_file_name %>: valid_attributes }
+          post :create, { <%= nombre_tabla_completo_singular %>: valid_attributes }
 <% else -%>
-          post :create, params: { <%= ns_file_name %>: valid_attributes }
+          post :create, params: { <%= nombre_tabla_completo_singular %>: valid_attributes }
 <% end -%>
         end.to change(<%= class_name %>, :count).by(1)
       end
 
-      it 'redirects to the created <%= ns_file_name %>' do
+      it 'redirects to the created <%= nombre_tabla_completo_singular %>' do
 <% if Rails::VERSION::STRING < '5.0' -%>
-        post :create, { <%= ns_file_name %>: valid_attributes }
+        post :create, { <%= nombre_tabla_completo_singular %>: valid_attributes }
 <% else -%>
-        post :create, params: { <%= ns_file_name %>: valid_attributes }
+        post :create, params: { <%= nombre_tabla_completo_singular %>: valid_attributes }
 <% end -%>
         expect(response).to redirect_to(<%= class_name %>.last)
       end
@@ -151,9 +151,9 @@ RSpec.describe <%= controller_class_name %>Controller, <%= type_metatag(:control
     context 'with invalid params' do
       it "returns a success response (i.e. to display the 'new' template)" do
 <% if Rails::VERSION::STRING < '5.0' -%>
-        post :create, { <%= ns_file_name %>: invalid_attributes }
+        post :create, { <%= nombre_tabla_completo_singular %>: invalid_attributes }
 <% else -%>
-        post :create, params: { <%= ns_file_name %>: invalid_attributes }
+        post :create, params: { <%= nombre_tabla_completo_singular %>: invalid_attributes }
 <% end -%>
         expect(response).to be_successful
       end
@@ -167,12 +167,12 @@ RSpec.describe <%= controller_class_name %>Controller, <%= type_metatag(:control
         attributes_for(:<%= nombre_tabla_completo_singular %>)
       end
 
-      it 'updates the requested <%= ns_file_name %>' do
-        <%= file_name %> = create(:<%= ns_file_name %>)
+      it 'updates the requested <%= nombre_tabla_completo_singular %>' do
+        <%= file_name %> = create(:<%= nombre_tabla_completo_singular %>)
 <% if Rails::VERSION::STRING < '5.0' -%>
-        put :update, { id: <%= file_name %>.to_param, <%= ns_file_name %>: new_attributes }
+        put :update, { id: <%= file_name %>.to_param, <%= nombre_tabla_completo_singular %>: new_attributes }
 <% else -%>
-        put :update, params: { id: <%= file_name %>.to_param, <%= ns_file_name %>: new_attributes }
+        put :update, params: { id: <%= file_name %>.to_param, <%= nombre_tabla_completo_singular %>: new_attributes }
 <% end -%>
         <%= file_name %>.reload
 <% atributo = attributes.find { |at| !at.reference? && at.required? } -%>
@@ -183,12 +183,12 @@ RSpec.describe <%= controller_class_name %>Controller, <%= type_metatag(:control
 <% end -%>
       end
 
-      it 'redirects to the <%= ns_file_name %>' do
-        <%= file_name %> = create(:<%= ns_file_name %>)
+      it 'redirects to the <%= nombre_tabla_completo_singular %>' do
+        <%= file_name %> = create(:<%= nombre_tabla_completo_singular %>)
 <% if Rails::VERSION::STRING < '5.0' -%>
-        put :update, { id: <%= file_name %>.to_param, <%= ns_file_name %>: valid_attributes }
+        put :update, { id: <%= file_name %>.to_param, <%= nombre_tabla_completo_singular %>: valid_attributes }
 <% else -%>
-        put :update, params: { id: <%= file_name %>.to_param, <%= ns_file_name %>: valid_attributes }
+        put :update, params: { id: <%= file_name %>.to_param, <%= nombre_tabla_completo_singular %>: valid_attributes }
 <% end -%>
         expect(response).to redirect_to(<%= file_name %>)
       end
@@ -197,11 +197,11 @@ RSpec.describe <%= controller_class_name %>Controller, <%= type_metatag(:control
 <% if attributes.any? { |at| at.required? } -%>
     context 'with invalid params' do
       it 'returns a success response (i.e. to display the "edit" template)' do
-        <%= file_name %> = create(:<%= ns_file_name %>)
+        <%= file_name %> = create(:<%= nombre_tabla_completo_singular %>)
 <% if Rails::VERSION::STRING < '5.0' -%>
-        put :update, { id: <%= file_name %>.to_param, <%= ns_file_name %>: invalid_attributes }
+        put :update, { id: <%= file_name %>.to_param, <%= nombre_tabla_completo_singular %>: invalid_attributes }
 <% else -%>
-        put :update, params: { id: <%= file_name %>.to_param, <%= ns_file_name %>: invalid_attributes }
+        put :update, params: { id: <%= file_name %>.to_param, <%= nombre_tabla_completo_singular %>: invalid_attributes }
 <% end -%>
         expect(response).to be_successful
       end
@@ -218,9 +218,9 @@ RSpec.describe <%= controller_class_name %>Controller, <%= type_metatag(:control
 <% end -%>
     end
 
-    let!(:<%= ns_file_name %>) { create :<%= ns_file_name %> }
+    let!(:<%= nombre_tabla_completo_singular %>) { create :<%= nombre_tabla_completo_singular %> }
 
-    it 'destroys the requested <%= ns_file_name %>' do
+    it 'destroys the requested <%= nombre_tabla_completo_singular %>' do
 <% if options[:discard] -%>
       expect { subject }.to change(<%= class_name %>.kept, :count).by(-1)
 <% elsif options[:paranoia] -%>
@@ -232,7 +232,7 @@ RSpec.describe <%= controller_class_name %>Controller, <%= type_metatag(:control
 
     it 'setea el discarded_at' do
       subject
-      expect(<%= ns_file_name %>.reload.discarded_at).to be_present
+      expect(<%= nombre_tabla_completo_singular %>.reload.discarded_at).to be_present
     end
 
     it 'redirects to the <%= table_name %> list' do
