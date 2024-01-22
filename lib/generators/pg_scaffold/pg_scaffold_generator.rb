@@ -29,9 +29,9 @@ class PgScaffoldGenerator < Rails::Generators::NamedBase
   invoke :resource_route
   invoke :pg_slim
 
-  # def decorator
-  #   invoke :pg_decorator if options[:decorator]
-  # end
+  def decorator
+    invoke :pg_decorator if options[:decorator]
+  end
 
   invoke :pg_pundit
 
