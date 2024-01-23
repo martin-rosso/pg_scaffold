@@ -80,8 +80,10 @@ RUBY
             'Faker::Lorem.sentence'
           elsif attribute.type == :date
             'Faker::Date.backward'
-          elsif attribute.type == :float || attribute.type == :decimal || attribute.type == :integer
+          elsif attribute.type == :float || attribute.type == :decimal
             'Faker::Number.decimal(l_digits: 3, r_digits: 2)'
+          elsif attribute.type == :integer
+            'rand(1..9999)'
           else
             attribute.default.inspect
           end

@@ -148,13 +148,14 @@ RSpec.describe <%= controller_class_name %>Controller do
 <% if attributes.any? { |at| at.required? } -%>
 
     context 'with invalid params' do
-      it "returns a success response (i.e. to display the 'new' template)" do
-<% if Rails::VERSION::STRING < '5.0' -%>
-        post :create, { <%= nombre_tabla_completo_singular %>: invalid_attributes }
-<% else -%>
+      it 'returns a unprocessable_entity response' do
         post :create, params: { <%= nombre_tabla_completo_singular %>: invalid_attributes }
-<% end -%>
-        expect(response).to be_successful
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+
+      it 'renders the new template' do
+        post :create, params: { <%= nombre_tabla_completo_singular %>: invalid_attributes }
+        expect(response).to render_template(:new)
       end
     end
 <% end -%>
@@ -195,14 +196,16 @@ RSpec.describe <%= controller_class_name %>Controller do
 <% if attributes.any? { |at| at.required? } -%>
 
     context 'with invalid params' do
-      it 'returns a success response (i.e. to display the "edit" template)' do
+      it 'returns a unprocessable_entity response' do
         <%= file_name %> = create(:<%= nombre_tabla_completo_singular %>)
-<% if Rails::VERSION::STRING < '5.0' -%>
-        put :update, { id: <%= file_name %>.to_param, <%= nombre_tabla_completo_singular %>: invalid_attributes }
-<% else -%>
         put :update, params: { id: <%= file_name %>.to_param, <%= nombre_tabla_completo_singular %>: invalid_attributes }
-<% end -%>
-        expect(response).to be_successful
+        expect(response).to have_http_status(:unprocessable_entity)
+      end
+
+      it 'renders the edit template' do
+        <%= nombre_tabla_completo_singular %> = create(:<%= nombre_tabla_completo_singular %>)
+        put :update, params: { id: <%= nombre_tabla_completo_singular %>.to_param, <%= nombre_tabla_completo_singular %>: invalid_attributes }
+        expect(response).to render_template(:edit)
       end
     end
 <% end -%>
