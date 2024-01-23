@@ -28,7 +28,7 @@ require 'rails_helper'
 # `rails-controller-testing` gem.
 
 <% module_namespacing do -%>
-RSpec.describe <%= controller_class_name %>Controller, <%= type_metatag(:controller) %> do
+RSpec.describe <%= controller_class_name %>Controller do
 <% if mountable_engine? -%>
   routes { <%= mountable_engine? %>::Engine.routes }
 
@@ -43,13 +43,12 @@ RSpec.describe <%= controller_class_name %>Controller, <%= type_metatag(:control
   let(:valid_attributes) do
     attributes_for(:<%= nombre_tabla_completo_singular %>)<%= merge_referencias %>
   end
-
 <% if attributes.any? { |at| at.required? } -%>
+<% required_att = attributes.select { |at| at.required? }.first -%>
+
   let(:invalid_attributes) do
     {
-<% attributes.select { |at| at.required? }.each do |atributo| -%>
-      <%= "#{atributo.name}: nil,"  %>
-<% end -%>
+      <%= "#{required_att.name}: nil"  %>
     }
   end
 <% end -%>
@@ -70,7 +69,7 @@ RSpec.describe <%= controller_class_name %>Controller, <%= type_metatag(:control
 <% end -%>
     end
 
-    let!(:<%= nombre_tabla_completo_singular %>) { create :<%= nombre_tabla_completo_singular %> }
+    before { create :<%= nombre_tabla_completo_singular %> }
 
     it 'returns a success response' do
       subject
@@ -146,8 +145,8 @@ RSpec.describe <%= controller_class_name %>Controller, <%= type_metatag(:control
         expect(response).to redirect_to(<%= class_name %>.last.decorate.target_object)
       end
     end
-
 <% if attributes.any? { |at| at.required? } -%>
+
     context 'with invalid params' do
       it "returns a success response (i.e. to display the 'new' template)" do
 <% if Rails::VERSION::STRING < '5.0' -%>
@@ -193,8 +192,8 @@ RSpec.describe <%= controller_class_name %>Controller, <%= type_metatag(:control
         expect(response).to redirect_to(<%= file_name %>.decorate.target_object)
       end
     end
-
 <% if attributes.any? { |at| at.required? } -%>
+
     context 'with invalid params' do
       it 'returns a success response (i.e. to display the "edit" template)' do
         <%= file_name %> = create(:<%= nombre_tabla_completo_singular %>)
@@ -235,8 +234,8 @@ RSpec.describe <%= controller_class_name %>Controller, <%= type_metatag(:control
       subject
       expect(<%= nombre_tabla_completo_singular %>.reload.discarded_at).to be_present
     end
-<% end -%>
 
+<% end -%>
     it 'redirects to the <%= table_name %> list' do
       subject
       expect(response).to redirect_to(<%= index_helper %>_url)

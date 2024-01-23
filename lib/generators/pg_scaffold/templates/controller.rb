@@ -6,8 +6,8 @@
 require_dependency "<%= namespaced_path %>/application_controller"
 
 <% end -%>
-<% module_namespacing do -%>
-class <%= controller_class_name %>Controller < ApplicationController
+<% module_namespacing_2 do -%>
+class <%= controller_class_name.split('::').last %>Controller < ApplicationController
   before_action { @clase_modelo = <%= class_name %> }
 
   before_action(only: :index) { authorize <%= class_name %> }
@@ -34,7 +34,7 @@ class <%= controller_class_name %>Controller < ApplicationController
 
   def edit
     add_breadcrumb @<%= singular_name %>, @<%= singular_name %>.target_object
-    add_breadcrumb "Editando"
+    add_breadcrumb 'Editando'
   end
 
   def create
@@ -51,12 +51,12 @@ class <%= controller_class_name %>Controller < ApplicationController
 
   private
 
-    def render_smart_listing
-      @<%= plural_name %> = @<%= plural_name %>.page(params[:page]).per(current_page_size)
-    end
+  def render_smart_listing
+    @<%= plural_name %> = @<%= plural_name %>.page(params[:page]).per(current_page_size)
+  end
 
-    def atributos_permitidos
-      %i[<%= attributes_names.join(' ') %>]
-    end
+  def atributos_permitidos
+    %i[<%= attributes_names.join(' ') %>]
+  end
 end
 <% end -%>

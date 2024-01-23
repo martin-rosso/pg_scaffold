@@ -3,16 +3,12 @@
 wb = xlsx_package.workbook
 wb.add_worksheet(name: '<%= human_name %>') do |sheet|
   sheet.add_row [
-<%- for attribute in attributes -%>
-    @clase_modelo.human_attribute_name(:<%= attribute.name %>),
-<%- end -%>
+    <%= attributes.map {|attribute| "@clase_modelo.human_attribute_name(:#{ attribute.name })" }.join(",\n    ") %>
   ]
 
   @<%= plural_name %>.each do |<%= singular_name %>|
     sheet.add_row [
-<%- for attribute in attributes -%>
-      <%= singular_name %>.<%= attribute.name %>,
-<%- end -%>
+      <%= attributes.map {|attribute| "#{ singular_name }.#{ attribute.name }" }.join(",\n      ") %>
     ]
   end
 end

@@ -42,26 +42,22 @@ module PgFactoryBot
 
       private
 
+#{factory_attributes.gsub(/^/, '    ')}#{los_traits.gsub(/^/, '    ')}
         def factory_definition
-          <<~RUBY
-              factory :#{singular_table_name}#{explicit_class_option} do
-            #{factory_attributes.gsub(/^/, '    ')}
-
-            #{los_traits.gsub(/^/, '    ')}
-              end
-
-          RUBY
+<<~RUBY
+  factory :#{singular_table_name}#{explicit_class_option} do
+#{factory_attributes}#{los_traits}
+  end
+RUBY
         end
 
         def los_traits
-          attributes.select(&:reference?).map do |atributo|
-            <<~RUBY
-              trait :#{atributo.name}_existente do
-                #{atributo.name} { nil }
-                #{atributo.name}_id { #{atributo.clase_con_modulo}.all.pluck(:id).sample }
-              end
-            RUBY
-          end.join("\n")
+          ret = attributes.select(&:reference?).map do |atributo|
+            {
+              clase: atributo.clase_con_modulo,
+              atributo_name: atributo.name,
+            }
+          end
         end
 
         # Genero los valores de las factories con los helpers de Faker
@@ -69,11 +65,12 @@ module PgFactoryBot
         def factory_attributes
           attributes.map do |attribute|
             if attribute.reference?
-              "association :#{attribute.name}, factory: :#{attribute.tabla_referenciada_singular}"
+              # "association :#{attribute.name}, factory: :#{attribute.tabla_referenciada_singular}"
+              attribute.name
             else
               "#{attribute.name} { #{valor_atributo(attribute)} }"
             end
-          end.join("\n")
+          end
         end
 
         def valor_atributo(attribute)

@@ -14,7 +14,7 @@ module PgRspec
 
       invoke 'pg_factory_bot:model'
 
-      def namespace # :doc:
+      def namespace # Esto quizas no es necesario
         nil
       end
       def class_path # :doc:
