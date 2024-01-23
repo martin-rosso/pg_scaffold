@@ -27,12 +27,8 @@ module PgFactoryBot
         desc: 'The directory or file root where factories belong'
       )
 
-      # este método es igual al de FactoryBot::Generators::Base
-      # pero si no lo pongo acá pone las clases sin el prefijo del módulo
+      # Los modelos nunca tienen modulo
       def explicit_class_option
-        return if nombre_clase_completo == singular_table_name.camelize
-
-        ", class: '#{nombre_clase_completo}'"
       end
 
       def namespace # :doc:

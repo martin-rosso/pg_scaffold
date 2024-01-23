@@ -14,7 +14,7 @@ class <%= controller_class_name %>Controller < ApplicationController
 
   before_action :set_instancia_modelo, only: %i[new create show edit update destroy]
 
-  add_breadcrumb <%= class_name %>.nombre_plural, :<%= plural_table_name %>_path
+  add_breadcrumb <%= class_name %>.nombre_plural, :<%= plural_route_name %>_path
 
   def index
     @<%= plural_name %> = filtros_y_policy %i[<%= atributos_a_filtrar.map(&:name).join(' ') %>]

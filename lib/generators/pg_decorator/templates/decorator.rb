@@ -10,9 +10,11 @@ class <%= class_name %>
   <%- end -%>
   delegate_all
 
-  # def default_module
-  #   :admin
-  # end
+  <%- if class_path_original.present? -%>
+  def default_module
+    :admin
+  end
+  <%- end -%>
 
   # Define presentation-specific methods here. Helpers are accessed through
   # `helpers` (aka `h`). You can override attributes, for example:

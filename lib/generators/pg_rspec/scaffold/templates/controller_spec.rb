@@ -143,7 +143,7 @@ RSpec.describe <%= controller_class_name %>Controller, <%= type_metatag(:control
 <% else -%>
         post :create, params: { <%= nombre_tabla_completo_singular %>: valid_attributes }
 <% end -%>
-        expect(response).to redirect_to(<%= class_name %>.last)
+        expect(response).to redirect_to(<%= class_name %>.last.decorate.target_object)
       end
     end
 
@@ -190,7 +190,7 @@ RSpec.describe <%= controller_class_name %>Controller, <%= type_metatag(:control
 <% else -%>
         put :update, params: { id: <%= file_name %>.to_param, <%= nombre_tabla_completo_singular %>: valid_attributes }
 <% end -%>
-        expect(response).to redirect_to(<%= file_name %>)
+        expect(response).to redirect_to(<%= file_name %>.decorate.target_object)
       end
     end
 
@@ -230,10 +230,12 @@ RSpec.describe <%= controller_class_name %>Controller, <%= type_metatag(:control
 <% end -%>
     end
 
+<% if options[:discard] -%>
     it 'setea el discarded_at' do
       subject
       expect(<%= nombre_tabla_completo_singular %>.reload.discarded_at).to be_present
     end
+<% end -%>
 
     it 'redirects to the <%= table_name %> list' do
       subject

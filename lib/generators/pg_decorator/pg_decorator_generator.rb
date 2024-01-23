@@ -10,6 +10,7 @@ class PgDecoratorGenerator < Rails::Generators::DecoratorGenerator
   def namespace # :doc:
     nil
   end
+
   def class_path # :doc:
     []
   end
@@ -17,6 +18,11 @@ class PgDecoratorGenerator < Rails::Generators::DecoratorGenerator
   end
 
   private
+
+    def class_path_original
+      @class_path.first
+    end
+
 
     def parent_class_name
       'PgRails::BaseDecorator'
