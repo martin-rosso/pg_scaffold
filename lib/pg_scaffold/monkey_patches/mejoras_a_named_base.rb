@@ -6,11 +6,12 @@ module Rails
   module Generators
     class NamedBase < Base
       def nombre_clase_completo
-        if namespaced?
-          (namespaced_class_path + [file_name]).map!(&:camelize).join('::')
-        else
-          (regular_class_path + [file_name]).map!(&:camelize).join('::')
-        end
+        # if namespaced?
+        #   (namespaced_class_path + [file_name]).map!(&:camelize).join('::')
+        # else
+        #   (regular_class_path + [file_name]).map!(&:camelize).join('::')
+        # end
+        file_name.camelize
       end
 
       def nombre_tabla_completo_singular
@@ -23,6 +24,7 @@ module Rails
 
       private
 
+        # Deprecado?
         def ruta_vistas
           if namespaced?
             namespaced_class_path.dup.push(plural_name).join('/')

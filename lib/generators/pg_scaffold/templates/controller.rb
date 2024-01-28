@@ -18,7 +18,7 @@ class <%= controller_class_name.split('::').last %>Controller < ApplicationContr
 
   def index
     @<%= plural_name %> = filtros_y_policy %i[<%= atributos_a_filtrar.map(&:name).join(' ') %>]
-
+    @<%= plural_name %> = sort_collection(@<%= plural_name %>)
     pg_respond_index(@<%= plural_name %>)
   end
 

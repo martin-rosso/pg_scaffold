@@ -77,7 +77,7 @@ RSpec.describe <%= controller_class_name %>Controller do
     end
 <% if options[:discard] -%>
 
-    context 'si está descartado' do
+    context 'when está descartado' do
       before { <%= nombre_tabla_completo_singular %>.discard! }
 
       it do
